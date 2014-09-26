@@ -49,7 +49,7 @@ def main():
 def install_package():
     """Install the required packages."""
 
-    feedback("Installing package.")
+    feedback("Installing packages.")
     subprocess.check_call(["apt-get", "install", "unattended-upgrades",
         "apt-listchanges"])
 
@@ -102,15 +102,16 @@ def configure_apt_rule_50():
 def configure_apt_listchanges():
     """Disable showing everything on stdout, send via mail instead."""
 
+    feedback("Checking apt-listchanges configuration.")
     content = None
     with open(LISTCHANGES, "r") as configuration:
         content = configuration.read()
 
     if FRONTEND in content:
+        feedback("Updating apt-listchanges frontend to use mail.")
         content = content.replace(FRONTEND, FRONTEND_MAIL)
-
-    with open(LISTCHANGES, "w") as configuration:
-        configuration.write(content)
+        with open(LISTCHANGES, "w") as configuration:
+            configuration.write(content)
 
 def feedback(string):
     """Prefix all feedback output with the script name."""
