@@ -34,11 +34,15 @@ def main():
         if EXPORT in content:
             feedback("Extending current export statement.")
             content = content.replace(EXPORT, build_extended_path(path_string))
-            with open(profile, "w") as profile_file:
-                profile_file.write(content)
+
         else:
             feedback("Adding new export statement.")
             content = content + "\n" + build_extended_path(path_string)
+
+        # write the changes back
+        with open(profile, "w") as profile_file:
+            profile_file.write(content)
+
 
     else:
         feedback("Nothing to do.")
