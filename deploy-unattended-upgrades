@@ -1,0 +1,86 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+deploy-unattended-upgrades.py
+
+:copyright: (c) 2014 by Alexander Skiba <skiba@icg.tugraz.at>
+:licence: MIT
+:bugreports: skiba@icg.tugraz.at
+
+Deploy the debian/ubuntu unattended-upgrades package and walk
+you through the setup.
+
+"""
+
+import subprocess
+
+# paths
+RULE50 = "/etc/apt/apt.conf.d/50unattended-upgrades"
+
+# general strings
+PREFIX = "DEPLOY-UNATTENDED-UPGRADES: "
+
+# strings to be matched
+BUGFIXES = "//\t\"${distro_id}:${distro_codename}-updates\";"
+MAIL = "//Unattended-Upgrade::Mail \"root\";"
+
+BUGFIXES_ENABLED = "\t\"${distro_id}:${distro_codename}-updates\";"
+MAIL_ENABLED = "Unattended-Upgrade::Mail \"root\";"
+
+
+def main():
+    """Deploy unattended-upgrades."""
+
+    install_package()
+    call_dpkg_reconfigure()
+    configure_apt_rule_50()
+
+def install_package():
+    """Install the required package."""
+
+    feedback("Installing package.")
+    subprocess.check_call(["apt-get", "install", "unattended-upgrades"])
+
+def call_dpkg_reconfigure():
+    """Explicitly call dpkg-reconfigure to enable updating."""
+
+    feedback("Calling reconfigure.")
+    subprocess.check_call(["dpkg-reconfigure", "-plow", "unattended-upgrades"])
+
+def configure_apt_rule_50():
+    """Enable updating bugfix packages and mail reporting in apt rule."""
+
+    rule = None
+    with open(RULE50, "r") as rule_file:
+        rule = rule_file.read()
+
+    content_has_changed = False
+
+    feedback("Checking whether bugfix updates are enabled.")
+    if BUGFIXES in rule:
+        feedback("Enabling bugfix updates.")
+        rule = rule.replace(BUGFIXES, BUGFIXES_ENABLED)
+        content_has_changed = True
+
+
+    feedback("Checking whether sending mail is enabled.")
+    if MAIL in rule:
+        feedback("Enabling mail reporting.")
+        rule = rule.replace(MAIL, MAIL_ENABLED)
+        content_has_changed = True
+
+    if content_has_changed == True:
+        feedback("Configuration has changed and will be written to disk.")
+        with open(RULE50, "w") as rule_file:
+            rule_file.write(rule)
+    else:
+        feedback("Configuration unchanged.")
+
+def feedback(string):
+    """Prefix all feedback output with the script name."""
+
+    print PREFIX + string
+
+if __name__ == '__main__':
+    main()
