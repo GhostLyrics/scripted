@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+add-scripted-to-path.py
+
+:copyright: (c) 2014 by Alexander Skiba <skiba@icg.tugraz.at>
+:licence: MIT
+:bugreports: skiba@icg.tugraz.at
+
+Adds the newly checked out "scripted" folder to the bash path.
+
+"""
+
+import os
+
+# strings
+EXPORT = "export PATH"
+PREFIX = "ADD-SCRIPTED-TO-PATH: "
+
+def main():
+    """Add the scripted directory to the bash PATH."""
+
+    content = None
+    profile = os.path.expanduser("~/.bash_profile")
+    with open(profile, "r") as profile_file:
+        content = profile_file.read()
+
+    path_string = build_string()
+
+    if path_string not in content:
+        feedback("'scripted' is not in the PATH. Adding.")
+        content = content.replace(EXPORT, build_extended_path(path_string))
+        with open(profile, "w") as profile_file:
+            profile_file.write(content)
+    else:
+        feedback("Nothing to do.")
+
+    feedback("Done.")
+
+def build_string():
+    """Extend the PATH variable of bash with the current working directory."""
+
+    working_directory = os.getcwd()
+    path_string = "PATH=$PATH:" + working_directory
+
+    return path_string
+
+def build_extended_path(path_string):
+    """Extend the previously built path_string with the variable export."""
+
+    replacement_string = path_string + "\n" + EXPORT
+
+    return replacement_string
+
+def feedback(string):
+    """Prefix all feedback output with the script name."""
+
+    print PREFIX + string
+
+if __name__ == '__main__':
+    main()
