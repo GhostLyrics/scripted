@@ -9,7 +9,7 @@ deploy-unattended-upgrades.py
 :bugreports: skiba@icg.tugraz.at
 
 Deploy the debian/ubuntu unattended-upgrades package and walk
-you through the setup.
+you through the setup, including using apt-listchanges for notification.
 
 """
 
@@ -17,6 +17,7 @@ import subprocess
 
 # paths
 RULE50 = "/etc/apt/apt.conf.d/50unattended-upgrades"
+LISTCHANGES = "/etc/apt/listchanges.conf"
 
 # general strings
 PREFIX = "DEPLOY-UNATTENDED-UPGRADES: "
@@ -26,11 +27,13 @@ BUGFIXES = "//\"${distro_id}:${distro_codename}-updates\";"
 DEBIAN_STABLE = "//      \"o=Debian,a=stable\";"
 DEBIAN_STABLE_UPDATES = "//      \"o=Debian,a=stable-updates\";"
 MAIL = "//Unattended-Upgrade::Mail \"root\";"
+FRONTEND = "frontend=pager"
 
 BUGFIXES_ENABLED = "\t\"${distro_id}:${distro_codename}-updates\";"
 DEBIAN_STABLE_ENABLED = "      \"o=Debian,a=stable\";"
 DEBIAN_STABLE_UPDATES_ENABLED = "      \"o=Debian,a=stable-updates\";"
 MAIL_ENABLED = "Unattended-Upgrade::Mail \"root\";"
+FRONTEND_MAIL = "frontend=mail"
 
 
 def main():
@@ -39,14 +42,16 @@ def main():
     install_package()
     call_dpkg_reconfigure()
     configure_apt_rule_50()
+    configure_apt_listchanges()
 
     feedback("Done.")
 
 def install_package():
-    """Install the required package."""
+    """Install the required packages."""
 
     feedback("Installing package.")
-    subprocess.check_call(["apt-get", "install", "unattended-upgrades"])
+    subprocess.check_call(["apt-get", "install", "unattended-upgrades",
+        "apt-listchanges"])
 
 def call_dpkg_reconfigure():
     """Explicitly call dpkg-reconfigure to enable updating."""
@@ -94,6 +99,18 @@ def configure_apt_rule_50():
     else:
         feedback("Configuration unchanged.")
 
+def configure_apt_listchanges():
+    """Disable showing everything on stdout, send via mail instead."""
+
+    content = None
+    with open(LISTCHANGES, "r") as configuration:
+        content = configuration.read()
+
+    if FRONTEND in content:
+        content = content.replace(FRONTEND, FRONTEND_MAIL)
+
+    with open(LISTCHANGES, "w") as configuration:
+        configuration.write(content)
 
 def feedback(string):
     """Prefix all feedback output with the script name."""
