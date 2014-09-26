@@ -23,9 +23,13 @@ PREFIX = "DEPLOY-UNATTENDED-UPGRADES: "
 
 # strings to be matched
 BUGFIXES = "//\t\"${distro_id}:${distro_codename}-updates\";"
+DEBIAN_STABLE = "//\t\"o=Debian,a=stable\";"
+DEBIAN_STABLE_UPDATES = "//\t\"o=Debian,a=stable-updates\";"
 MAIL = "//Unattended-Upgrade::Mail \"root\";"
 
 BUGFIXES_ENABLED = "\t\"${distro_id}:${distro_codename}-updates\";"
+DEBIAN_STABLE_ENABLED = "\t\"o=Debian,a=stable\";"
+DEBIAN_STABLE_UPDATES_ENABLED = "\t\"o=Debian,a=stable-updates\";"
 MAIL_ENABLED = "Unattended-Upgrade::Mail \"root\";"
 
 
@@ -63,6 +67,17 @@ def configure_apt_rule_50():
     if BUGFIXES in rule:
         feedback("Enabling bugfix updates.")
         rule = rule.replace(BUGFIXES, BUGFIXES_ENABLED)
+        content_has_changed = True
+
+    if DEBIAN_STABLE in rule:
+        feedback("Enabling Debian Stable.")
+        rule = rule.replace(DEBIAN_STABLE, DEBIAN_STABLE_ENABLED)
+        content_has_changed = True
+
+    if DEBIAN_STABLE_UPDATES in rule:
+        feedback("Enabling Debian Stable Updates.")
+        rule = rule.replace(DEBIAN_STABLE_UPDATES,
+            DEBIAN_STABLE_UPDATES_ENABLED)
         content_has_changed = True
 
 
