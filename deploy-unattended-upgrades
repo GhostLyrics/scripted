@@ -22,14 +22,14 @@ RULE50 = "/etc/apt/apt.conf.d/50unattended-upgrades"
 PREFIX = "DEPLOY-UNATTENDED-UPGRADES: "
 
 # strings to be matched
-BUGFIXES = "//\t\"${distro_id}:${distro_codename}-updates\";"
-DEBIAN_STABLE = "//\t\"o=Debian,a=stable\";"
-DEBIAN_STABLE_UPDATES = "//\t\"o=Debian,a=stable-updates\";"
+BUGFIXES = "//\"${distro_id}:${distro_codename}-updates\";"
+DEBIAN_STABLE = "//      \"o=Debian,a=stable\";"
+DEBIAN_STABLE_UPDATES = "//      \"o=Debian,a=stable-updates\";"
 MAIL = "//Unattended-Upgrade::Mail \"root\";"
 
 BUGFIXES_ENABLED = "\t\"${distro_id}:${distro_codename}-updates\";"
-DEBIAN_STABLE_ENABLED = "\t\"o=Debian,a=stable\";"
-DEBIAN_STABLE_UPDATES_ENABLED = "\t\"o=Debian,a=stable-updates\";"
+DEBIAN_STABLE_ENABLED = "      \"o=Debian,a=stable\";"
+DEBIAN_STABLE_UPDATES_ENABLED = "      \"o=Debian,a=stable-updates\";"
 MAIL_ENABLED = "Unattended-Upgrade::Mail \"root\";"
 
 
