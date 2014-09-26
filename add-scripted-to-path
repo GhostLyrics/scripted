@@ -23,31 +23,43 @@ def main():
 
     content = None
     profile = os.path.expanduser("~/.bash_profile")
-    with open(profile, "r") as profile_file:
-        content = profile_file.read()
 
     path_string = build_string()
 
-    if path_string not in content:
-        feedback("'scripted' is not in the PATH. Adding.")
+    try:
+        with open(profile, "r") as profile_file:
+            content = profile_file.read()
 
-        if EXPORT in content:
-            feedback("Extending current export statement.")
-            content = content.replace(EXPORT, build_extended_path(path_string))
+        if path_string not in content:
+            feedback("'scripted' is not in the PATH. Adding.")
+
+            if EXPORT in content:
+                feedback("Extending current export statement.")
+                content = content.replace(EXPORT,
+                    build_extended_path(path_string))
+
+            else:
+                feedback("Adding new export statement.")
+                content = content + "\n" + build_extended_path(path_string)
+
+            with open(profile, "w") as profile_file:
+                profile_file.write(content)
 
         else:
-            feedback("Adding new export statement.")
-            content = content + "\n" + build_extended_path(path_string)
+            feedback("Nothing to do.")
 
-        # write the changes back
-        with open(profile, "w") as profile_file:
-            profile_file.write(content)
-
-
-    else:
-        feedback("Nothing to do.")
+    except IOError:
+        write_bash_profile(profile)
+        feedback("Wrote new bash_profile.")
 
     feedback("Done.")
+
+def write_bash_profile(profile):
+    """Create a new .bash_profile file with only our data."""
+
+    new_content = build_extended_path(build_string()) + "\n"
+    with open(profile, "w") as profile_file:
+        profile_file.write(new_content)
 
 def build_string():
     """Extend the PATH variable of bash with the current working directory."""
