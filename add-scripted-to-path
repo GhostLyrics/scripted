@@ -30,9 +30,16 @@ def main():
 
     if path_string not in content:
         feedback("'scripted' is not in the PATH. Adding.")
-        content = content.replace(EXPORT, build_extended_path(path_string))
-        with open(profile, "w") as profile_file:
-            profile_file.write(content)
+
+        if EXPORT in content:
+            feedback("Extending current export statement.")
+            content = content.replace(EXPORT, build_extended_path(path_string))
+            with open(profile, "w") as profile_file:
+                profile_file.write(content)
+        else:
+            feedback("Adding new export statement.")
+            content = content + "\n" + build_extended_path(path_string)
+
     else:
         feedback("Nothing to do.")
 
