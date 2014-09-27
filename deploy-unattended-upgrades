@@ -28,12 +28,14 @@ BUGFIXES = "//\t\"${distro_id}:${distro_codename}-updates\";"
 DEBIAN_STABLE = "//      \"o=Debian,a=stable\";"
 DEBIAN_STABLE_UPDATES = "//      \"o=Debian,a=stable-updates\";"
 MAIL = "//Unattended-Upgrade::Mail \"root\";"
+MAIL2 = "//Unattended-Upgrade::Mail \"root@localhost\";"
 FRONTEND = "frontend=pager"
 
 BUGFIXES_ENABLED = "\t\"${distro_id}:${distro_codename}-updates\";"
 DEBIAN_STABLE_ENABLED = "      \"o=Debian,a=stable\";"
 DEBIAN_STABLE_UPDATES_ENABLED = "      \"o=Debian,a=stable-updates\";"
 MAIL_ENABLED = "Unattended-Upgrade::Mail \"root\";"
+
 FRONTEND_MAIL = "frontend=mail"
 
 # help texts
@@ -98,6 +100,10 @@ def configure_apt_rule_50():
     if MAIL in rule:
         feedback("Enabling mail reporting.")
         rule = rule.replace(MAIL, MAIL_ENABLED)
+        content_has_changed = True
+    elif MAIL2 in rule:
+        feedback("Enabling mail reporting.")
+        rule = rule.replace(MAIL2, MAIL_ENABLED)
         content_has_changed = True
 
     if content_has_changed == True:
