@@ -24,7 +24,7 @@ LISTCHANGES = "/etc/apt/listchanges.conf"
 PREFIX = "DEPLOY-UNATTENDED-UPGRADES: "
 
 # strings to be matched
-BUGFIXES = "//\"${distro_id}:${distro_codename}-updates\";"
+BUGFIXES = "//\t\"${distro_id}:${distro_codename}-updates\";"
 DEBIAN_STABLE = "//      \"o=Debian,a=stable\";"
 DEBIAN_STABLE_UPDATES = "//      \"o=Debian,a=stable-updates\";"
 MAIL = "//Unattended-Upgrade::Mail \"root\";"
