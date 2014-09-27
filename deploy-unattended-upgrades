@@ -9,11 +9,12 @@ deploy-unattended-upgrades.py
 :bugreports: skiba@icg.tugraz.at
 
 Deploy the debian/ubuntu unattended-upgrades package and walk
-you through the setup, including using apt-listchanges for notification.
+you through the setup.
 
 """
 
 import subprocess
+import argparse
 
 # paths
 RULE50 = "/etc/apt/apt.conf.d/50unattended-upgrades"
@@ -35,23 +36,30 @@ DEBIAN_STABLE_UPDATES_ENABLED = "      \"o=Debian,a=stable-updates\";"
 MAIL_ENABLED = "Unattended-Upgrade::Mail \"root\";"
 FRONTEND_MAIL = "frontend=mail"
 
+# help texts
+H_LISTCHANGES = "install and enable apt-listchanges"
+
 
 def main():
     """Deploy unattended-upgrades."""
 
-    install_package()
+    options = parse_arguments()
+
+    install_package("unattended-upgrades")
     call_dpkg_reconfigure()
     configure_apt_rule_50()
-    configure_apt_listchanges()
+
+    if options.enable_listchanges:
+        install_package("apt-listchanges")
+        configure_apt_listchanges()
 
     feedback("Done.")
 
-def install_package():
+def install_package(package):
     """Install the required packages."""
 
-    feedback("Installing packages.")
-    subprocess.check_call(["apt-get", "install", "unattended-upgrades",
-        "apt-listchanges"])
+    feedback("Installing {}.".format(package))
+    subprocess.check_call(["apt-get", "install", package])
 
 def call_dpkg_reconfigure():
     """Explicitly call dpkg-reconfigure to enable updating."""
@@ -112,6 +120,17 @@ def configure_apt_listchanges():
         content = content.replace(FRONTEND, FRONTEND_MAIL)
         with open(LISTCHANGES, "w") as configuration:
             configuration.write(content)
+
+def parse_arguments():
+    """Parse arguments, provide help text."""
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--enable-listchanges", help=H_LISTCHANGES,
+        action="store_true")
+
+    arguments = parser.parse_args()
+
+    return arguments
 
 def feedback(string):
     """Prefix all feedback output with the script name."""
