@@ -62,10 +62,11 @@ def write_bash_profile(profile):
         profile_file.write(new_content)
 
 def build_string():
-    """Extend the PATH variable of bash with the current working directory."""
+    """Extend the PATH variable with the directory containing these scripts."""
 
-    working_directory = os.getcwd()
-    path_string = "PATH=$PATH:" + working_directory
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+
+    path_string = "PATH=$PATH:" + script_directory
 
     return path_string
 
