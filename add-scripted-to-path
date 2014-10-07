@@ -54,6 +54,7 @@ def main():
         feedback.give("Wrote new bash_profile.")
 
     feedback.give("Done.")
+    feedback.give("You can now run \"source ~/.bash_profile\".")
 
 def write_bash_profile(profile):
     """Create a new .bash_profile file with only our data."""
