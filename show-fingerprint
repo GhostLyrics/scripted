@@ -12,11 +12,14 @@ Print the fingerprint of the keys in /etc/ssh/
 
 """
 
+import os
 import subprocess
+import library.feedback as feedback
 
 def main():
     """Print the fingerprint of the keys in /etc/ssh/"""
 
+    feedback.register(os.path.basename(__file__).upper())
     keys = assemble_keypaths()
     print_fingerprints(keys)
 
@@ -42,7 +45,11 @@ def print_fingerprints(keylist):
     """Print the keys to stdout"""
 
     for key in keylist:
-        subprocess.check_call(["ssh-keygen", "-l", "-f", key])
+        try:
+            subprocess.check_call(["ssh-keygen", "-l", "-f", key])
+        except subprocess.CalledProcessError:
+            feedback.give("Could not print key: {}".format(key))
+
 
 
 if __name__ == '__main__':
