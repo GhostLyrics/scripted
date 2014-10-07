@@ -27,7 +27,7 @@ def assemble_keypaths():
     paths = []
     folder = "/etc/ssh/"
     keys = ["ssh_host_dsa_key.pub",
-            "ssh_host_key.pub"
+            "ssh_host_key.pub",
             "ssh_host_rsa_key.pub",
             "ssh_host_ecdsa_key.pub",
             ]
