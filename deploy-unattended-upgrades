@@ -13,8 +13,10 @@ you through the setup.
 
 """
 
+import os
 import subprocess
 import argparse
+import library.feedback as feedback
 
 # paths
 RULE50 = "/etc/apt/apt.conf.d/50unattended-upgrades"
@@ -45,6 +47,8 @@ H_LISTCHANGES = "install and enable apt-listchanges"
 def main():
     """Deploy unattended-upgrades."""
 
+    feedback.register(os.path.basename(__file__).upper())
+
     options = parse_arguments()
 
     install_package("unattended-upgrades")
@@ -55,18 +59,18 @@ def main():
         install_package("apt-listchanges")
         configure_apt_listchanges()
 
-    feedback("Done.")
+    feedback.give("Done.")
 
 def install_package(package):
     """Install the required packages."""
 
-    feedback("Installing {}.".format(package))
+    feedback.give("Installing {}.".format(package))
     subprocess.check_call(["apt-get", "install", package])
 
 def call_dpkg_reconfigure():
     """Explicitly call dpkg-reconfigure to enable updating."""
 
-    feedback("Calling reconfigure.")
+    feedback.give("Calling reconfigure.")
     subprocess.check_call(["dpkg-reconfigure", "-plow", "unattended-upgrades"])
 
 def configure_apt_rule_50():
@@ -78,51 +82,51 @@ def configure_apt_rule_50():
 
     content_has_changed = False
 
-    feedback("Checking whether bugfix updates are enabled.")
+    feedback.give("Checking whether bugfix updates are enabled.")
     if BUGFIXES in rule:
-        feedback("Enabling bugfix updates.")
+        feedback.give("Enabling bugfix updates.")
         rule = rule.replace(BUGFIXES, BUGFIXES_ENABLED)
         content_has_changed = True
 
     if DEBIAN_STABLE in rule:
-        feedback("Enabling Debian Stable.")
+        feedback.give("Enabling Debian Stable.")
         rule = rule.replace(DEBIAN_STABLE, DEBIAN_STABLE_ENABLED)
         content_has_changed = True
 
     if DEBIAN_STABLE_UPDATES in rule:
-        feedback("Enabling Debian Stable Updates.")
+        feedback.give("Enabling Debian Stable Updates.")
         rule = rule.replace(DEBIAN_STABLE_UPDATES,
             DEBIAN_STABLE_UPDATES_ENABLED)
         content_has_changed = True
 
 
-    feedback("Checking whether sending mail is enabled.")
+    feedback.give("Checking whether sending mail is enabled.")
     if MAIL in rule:
-        feedback("Enabling mail reporting.")
+        feedback.give("Enabling mail reporting.")
         rule = rule.replace(MAIL, MAIL_ENABLED)
         content_has_changed = True
     elif MAIL2 in rule:
-        feedback("Enabling mail reporting.")
+        feedback.give("Enabling mail reporting.")
         rule = rule.replace(MAIL2, MAIL_ENABLED)
         content_has_changed = True
 
     if content_has_changed == True:
-        feedback("Configuration has changed and will be written to disk.")
+        feedback.give("Configuration has changed and will be written to disk.")
         with open(RULE50, "w") as rule_file:
             rule_file.write(rule)
     else:
-        feedback("Configuration unchanged.")
+        feedback.give("Configuration unchanged.")
 
 def configure_apt_listchanges():
     """Disable showing everything on stdout, send via mail instead."""
 
-    feedback("Checking apt-listchanges configuration.")
+    feedback.give("Checking apt-listchanges configuration.")
     content = None
     with open(LISTCHANGES, "r") as configuration:
         content = configuration.read()
 
     if FRONTEND in content:
-        feedback("Updating apt-listchanges frontend to use mail.")
+        feedback.give("Updating apt-listchanges frontend to use mail.")
         content = content.replace(FRONTEND, FRONTEND_MAIL)
         with open(LISTCHANGES, "w") as configuration:
             configuration.write(content)
@@ -137,11 +141,6 @@ def parse_arguments():
     arguments = parser.parse_args()
 
     return arguments
-
-def feedback(string):
-    """Prefix all feedback output with the script name."""
-
-    print PREFIX + string
 
 if __name__ == '__main__':
     main()
