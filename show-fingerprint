@@ -1,0 +1,48 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+print-rsa-fingerprint.py
+
+:copyright: (c) 2014 by Alexander Skiba <skiba@icg.tugraz.at>
+:licence: MIT
+:bugreports: skiba@icg.tugraz.at
+
+Print the fingerprint of the keys in /etc/ssh/
+
+"""
+
+import subprocess
+
+def main():
+    """Print the fingerprint of the keys in /etc/ssh/"""
+
+    keys = assemble_keypaths()
+    print_fingerprints(keys)
+
+
+def assemble_keypaths():
+    """Piece together the full paths to the public keys."""
+
+    paths = []
+    folder = "/etc/ssh/"
+    keys = ["ssh_host_rsa_key.pub",
+            "ssh_host_dsa_key.pub",
+            "ssh_host_ecdsa_key.pub",
+            "ssh_host_key.pub"]
+
+    for key in keys:
+        paths.append(folder+key)
+
+    return paths
+
+
+def print_fingerprints(keylist):
+    """Print the keys to stdout"""
+
+    for key in keylist:
+        subprocess.check_call(["ssh-keygen", "-l", "-f", key])
+
+
+if __name__ == '__main__':
+    main()
