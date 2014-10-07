@@ -1,0 +1,6 @@
+
+# OS X resource forks
+*.DS_Store
+
+# Python compiled files
+*.pyc
