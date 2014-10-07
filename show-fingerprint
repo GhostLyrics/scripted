@@ -45,10 +45,7 @@ def print_fingerprints(keylist):
     """Print the keys to stdout"""
 
     for key in keylist:
-        try:
-            subprocess.check_call(["ssh-keygen", "-l", "-f", key])
-        except subprocess.CalledProcessError:
-            feedback.give("Could not print key: {}".format(key))
+        subprocess.call(["ssh-keygen", "-l", "-f", key])
 
 
 
