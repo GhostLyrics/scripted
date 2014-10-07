@@ -1,4 +1,8 @@
-# Commandline gems from the ICG administration
+# Commandline tools
+
+Most of these tools were originally written for use at the [ICG][].
+
+[ICG]: http://icg.tugraz.at
 
 ## Installation
 
