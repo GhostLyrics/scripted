@@ -13,17 +13,18 @@ Adds the newly checked out "scripted" folder to the bash path.
 """
 
 import os
+import library.feedback as feedback
 
 # strings
 EXPORT = "export PATH"
-PREFIX = "ADD-SCRIPTED-TO-PATH: "
 
 def main():
     """Add the scripted directory to the bash PATH."""
 
+    feedback.register(os.path.basename(__file__).upper())
+
     content = None
     profile = os.path.expanduser("~/.bash_profile")
-
     path_string = build_string()
 
     try:
@@ -31,28 +32,28 @@ def main():
             content = profile_file.read()
 
         if path_string not in content:
-            feedback("'scripted' is not in the PATH. Adding.")
+            feedback.give("'scripted' is not in the PATH. Adding.")
 
             if EXPORT in content:
-                feedback("Extending current export statement.")
+                feedback.give("Extending current export statement.")
                 content = content.replace(EXPORT,
                     build_extended_path(path_string))
 
             else:
-                feedback("Adding new export statement.")
+                feedback.give("Adding new export statement.")
                 content = content + "\n" + build_extended_path(path_string)
 
             with open(profile, "w") as profile_file:
                 profile_file.write(content)
 
         else:
-            feedback("Nothing to do.")
+            feedback.give("Nothing to do.")
 
     except IOError:
         write_bash_profile(profile)
-        feedback("Wrote new bash_profile.")
+        feedback.give("Wrote new bash_profile.")
 
-    feedback("Done.")
+    feedback.give("Done.")
 
 def write_bash_profile(profile):
     """Create a new .bash_profile file with only our data."""
@@ -61,14 +62,15 @@ def write_bash_profile(profile):
     with open(profile, "w") as profile_file:
         profile_file.write(new_content)
 
+
 def build_string():
     """Extend the PATH variable with the directory containing these scripts."""
 
     script_directory = os.path.dirname(os.path.realpath(__file__))
-
     path_string = "PATH=$PATH:" + script_directory
 
     return path_string
+
 
 def build_extended_path(path_string):
     """Extend the previously built path_string with the variable export."""
@@ -77,10 +79,6 @@ def build_extended_path(path_string):
 
     return replacement_string
 
-def feedback(string):
-    """Prefix all feedback output with the script name."""
-
-    print PREFIX + string
 
 if __name__ == '__main__':
     main()
