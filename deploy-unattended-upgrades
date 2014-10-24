@@ -43,15 +43,15 @@ FRONTEND_MAIL = "frontend=mail"
 
 # help texts
 H_LISTCHANGES = "install and enable apt-listchanges"
+H_OVERRIDE_SYSTEM = "disable checking for compatible operating systems"
 
 
 def main():
     """Deploy unattended-upgrades."""
 
-    feedback.register(os.path.basename(__file__).upper())
-    system.compatible(["Ubuntu", "Debian"])
-
     options = parse_arguments()
+    feedback.register(os.path.basename(__file__).upper())
+    system.compatible(["Ubuntu", "Debian"], options.disable_compatibility_check)
 
     install_package("unattended-upgrades")
     call_dpkg_reconfigure()
@@ -137,7 +137,11 @@ def parse_arguments():
     """Parse arguments, provide help text."""
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--enable-listchanges", help=H_LISTCHANGES,
+    parser.add_argument("--enable-listchanges",
+        help=H_LISTCHANGES,
+        action="store_true")
+    parser.add_argument("--disable-compatibility-check",
+        help=H_OVERRIDE_SYSTEM,
         action="store_true")
 
     arguments = parser.parse_args()

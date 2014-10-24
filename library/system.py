@@ -25,10 +25,12 @@ def get_system():
 
     return system
 
-def compatible(compatible_systems):
+def compatible(compatible_systems, override_enabled):
     """Checks if the script in question is compatible with the system."""
     if get_system() in compatible_systems:
         feedback.give("System compatible.")
+    elif override_enabled is True:
+        feedback.give("Override enabled. ")
     else:
         feedback.give("System not compatible.")
         feedback.give("Compatible systems are: {}".format(compatible_systems))
