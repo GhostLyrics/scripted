@@ -21,4 +21,4 @@ Check out the repository and run `make`.
 ## Additional notes
 
 * Use `--help` if you are unsure which parameters a script takes.
-* Use `--disable-os-check` to override the built-in specifications for which system a script is enabled.
+* Use `--disable-compatibility-check` to override the built-in specifications for which system a script is enabled.
