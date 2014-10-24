@@ -17,6 +17,7 @@ import os
 import subprocess
 import argparse
 import library.feedback as feedback
+import library.system as system
 
 # paths
 RULE50 = "/etc/apt/apt.conf.d/50unattended-upgrades"
@@ -48,6 +49,7 @@ def main():
     """Deploy unattended-upgrades."""
 
     feedback.register(os.path.basename(__file__).upper())
+    system.compatible(["Ubuntu", "Debian"])
 
     options = parse_arguments()
 
