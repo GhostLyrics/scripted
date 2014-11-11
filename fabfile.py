@@ -19,3 +19,4 @@ from fabric.api import env
 env.use_ssh_config = True
 
 from fabrications.ssh import *
+from fabrications.networking import *
