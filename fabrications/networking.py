@@ -12,7 +12,7 @@ Network related fabric commands
 
 """
 
-from fabric.api import run, hide
+from fabric.api import run, hide, env
 import re
 
 def get_IPs():
@@ -24,6 +24,10 @@ def get_IPs():
 
     lines = information.split("\n")
     count = 0
+
+    print "\n"
+    print "IP information for " + env.host
+
     for line in lines:
         if re.match("eth", line) is not None:
 
@@ -34,10 +38,14 @@ def get_IPs():
             # [0-9]+: one or more digits
             # \.: escape dot so it is not treated as regex syntax
             regex = r"[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+"
-            ip_address = re.findall(regex, lines[count+1])[0]
-
-            print "IP: " + ip_address,
-            print " on " + interface,
-            print " with MAC " + mac_address
+            try:
+                ip_address = re.findall(regex, lines[count+1])[0]
+            except IndexError:
+                print "Interface is up but has no IP."
+            else:
+                print "IP: " + ip_address,
+                print " on " + interface,
+                print " with MAC " + mac_address
 
         count = count + 1
+    print "\n"
