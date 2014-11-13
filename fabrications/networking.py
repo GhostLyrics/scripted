@@ -8,7 +8,7 @@ fabrications/networking.py
 :licence: MIT
 :bugreports: skiba@icg.tugraz.at
 
-Network related fabric commands
+Network fabric commands
 
 """
 

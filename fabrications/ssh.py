@@ -8,7 +8,7 @@ fabrications/ssh.py
 :licence: MIT
 :bugreports: skiba@icg.tugraz.at
 
-SSH related fabric commands
+SSH fabric commands
 
 """
 
