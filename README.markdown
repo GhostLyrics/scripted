@@ -1,4 +1,6 @@
-# Commandline tools
+# Fabric tools
+
+**Please note that this repository is currently being rewritten to be based on Fabric. The rewrite is not yet complete.**
 
 Most of these tools were originally written for use at the [ICG][].
 
@@ -6,19 +8,14 @@ Most of these tools were originally written for use at the [ICG][].
 
 ## Installation
 
-Check out the repository and run `make`.
-
     git clone https://github.com/GhostLyrics/scripted.git
-    make
 
-## Files
+## Requirements
 
-* `add-scripted-to-path` is used by the Makefile to add the checked out directory to the PATH environment variable.
-* `deploy-unattended-upgrades` can be used to enable unattended-upgrades on Debian and Ubuntu installations. Optionally, `apt-listchanges` can be enabled.
-* `expand-url` takes one parameter: the **URL** to expand. It will print out all redirects the short URL points to on the way to the target, including the final target.
-* `show-fingerprint` is used to print the fingerprints of the machine's host keys from the default paths. It will print RSA, RSA1, DSA and ECDSA fingerprints.
+* [Fabric](http://www.fabfile.org)
 
-## Additional notes
+## Usage
 
-* Use `--help` if you are unsure which parameters a script takes.
-* Use `--disable-compatibility-check` to override the built-in specifications for which system a script is enabled.
+After having checked out the repository, you can get a list of everything that is available in the current version with `fab --list` (You need to be in the checked out directory for that command).
+Keep in mind that some modules require configuration. You can find the corresponding JSON templates in `templates/`. Copy the ones you need to `configuration/` and edit them to suit your environment.
+
