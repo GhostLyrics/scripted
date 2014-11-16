@@ -15,7 +15,7 @@ Cyrus Mailserver fabric commands
 import fabrications.cyrus_helper as helper
 
 def create_mailbox(mailbox_user):
-    """Create a new cyrus mailbox for the specified user."""
+    """CYRUS: Create a new mailbox for the specified user."""
 
     configuration = helper.get_config()
     connection = helper.login(configuration["hostname"],
