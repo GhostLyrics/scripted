@@ -18,6 +18,7 @@ Collects all fabrications.
 from fabric.api import env
 env.use_ssh_config = True
 
+from fabrications.cron import *
 from fabrications.cyrus import *
 from fabrications.networking import *
 from fabrications.ssh import *
