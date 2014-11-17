@@ -12,9 +12,10 @@ SSH fabric commands
 
 """
 
-from fabric.api import run, settings, hide, env
+from fabric.api import run, settings, hide, env, task
 import re
 
+@task
 def get_fingerprints():
     """SSH: Retrieve a machine's fingerprints"""
 

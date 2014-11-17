@@ -12,8 +12,9 @@ Cronjob fabric commands
 
 """
 
-from fabric.api import run, settings, hide, env
+from fabric.api import run, settings, hide, env, task
 
+@task
 def get_cronjobs():
     """CRON: Retrieve lists of custom and scheduled cronjobs"""
 

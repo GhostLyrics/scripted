@@ -12,9 +12,10 @@ Network fabric commands
 
 """
 
-from fabric.api import run, hide, env
+from fabric.api import run, hide, env, task
 import re
 
+@task
 def get_IPs():
     """NETWORK: Retrieve IP, network interface and MAC address of a machine."""
 

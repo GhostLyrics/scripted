@@ -12,13 +12,19 @@ Cyrus Mailserver fabric commands
 
 """
 
-import fabrications.cyrus_helper as helper
+from fabric.api import task
 
+import json
+import imaplib
+
+# tasks
+
+@task
 def create_mailbox(mailbox_user):
     """CYRUS: Create a new mailbox for the specified user."""
 
-    configuration = helper.get_config()
-    connection = helper.login(configuration["hostname"],
+    configuration = get_config()
+    connection = login(configuration["hostname"],
         configuration["username"],
         configuration["password"])
     try:
@@ -30,4 +36,17 @@ def create_mailbox(mailbox_user):
         connection.logout()
 
 
+# internal functions
 
+def login(server, username, password):
+    """Authenticate to the IMAP server"""
+
+    connection = imaplib.IMAP4_SSL(server)
+    connection.login(username, password)
+    return connection
+
+def get_config():
+    """Read the configuration from /configuration/cyrus.json"""
+
+    with open("./configuration/cyrus.json") as configuration:
+        return json.load(configuration)
