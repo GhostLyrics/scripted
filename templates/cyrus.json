@@ -2,5 +2,5 @@
   "hostname" : "imap.example.org",
   "username" : "example",
   "password" : "examplePassword",
-  "default_quota" : 0 // in Megabytes
+  "default_quota" : 0
 }
