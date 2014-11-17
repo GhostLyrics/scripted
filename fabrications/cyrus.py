@@ -15,6 +15,7 @@ Cyrus Mailserver fabric commands
 from fabric.api import task
 
 import json
+import os
 import imaplib
 
 # tasks
@@ -46,7 +47,11 @@ def login(server, username, password):
     return connection
 
 def get_config():
-    """Read the configuration from /configuration/cyrus.json"""
+    """Read the configuration from configuration/cyrus.json"""
 
-    with open("./configuration/cyrus.json") as configuration:
+    fabric_path = os.path.dirname(os.path.realpath(__file__))
+    prefix = os.path.dirname(fabric_path)
+    configuration_path = os.path.join(prefix, "configuration/cyrus.json")
+
+    with open(configuration_path) as configuration:
         return json.load(configuration)
