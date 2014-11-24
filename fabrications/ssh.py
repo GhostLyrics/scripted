@@ -40,3 +40,16 @@ def get_fingerprints():
     for key in retrieved_keys:
         print key
     print "\n"
+
+
+@task
+def set_password_login(value):
+    """SSH: Enable/Disable password login."""
+
+    if value == "True":
+        sed("/etc/ssh/sshd_config", "PasswordAuthentication no",
+            "#PasswordAuthentication yes", use_sudo=True)
+
+    elif value == "False":
+        sed("/etc/ssh/sshd_config", "#PasswordAuthentication yes",
+            "PasswordAuthentication no", use_sudo=True)
