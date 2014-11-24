@@ -2,21 +2,22 @@
 # -*- coding: utf-8 -*-
 
 """
-fabrications/networking.py
+Network fabric commands.
 
 :copyright: (c) 2014 by Alexander Skiba <skiba@icg.tugraz.at>
 :licence: MIT
 :bugreports: skiba@icg.tugraz.at
-
-Network fabric commands
 
 """
 
 from fabric.api import run, hide, env, task
 import re
 
+# tasks #######################################################################
+
+
 @task
-def get_IPs():
+def get_IPs():  # pylint: disable=C0103
     """NETWORK: Retrieve IP, network interface and MAC address of a machine."""
 
     information = None
