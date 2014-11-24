@@ -20,5 +20,6 @@ env.use_ssh_config = True
 
 from fabrications.cron import *
 from fabrications.cyrus import *
+from fabrications.dhcp import *
 from fabrications.networking import *
 from fabrications.ssh import *
