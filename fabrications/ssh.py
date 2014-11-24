@@ -2,28 +2,29 @@
 # -*- coding: utf-8 -*-
 
 """
-fabrications/ssh.py
+SSH fabric commands.
 
 :copyright: (c) 2014 by Alexander Skiba <skiba@icg.tugraz.at>
 :licence: MIT
 :bugreports: skiba@icg.tugraz.at
 
-SSH fabric commands
-
 """
 
 from fabric.api import run, settings, hide, env, task
+from fabric.contrib.files import sed
 import re
+
+# tasks #######################################################################
+
 
 @task
 def get_fingerprints():
-    """SSH: Retrieve a machine's fingerprints"""
+    """SSH: Retrieve a machine's fingerprints."""
 
     ssh_key_locations = ["ssh_host_dsa_key",
-        "ssh_host_key",
-        "ssh_host_rsa_key",
-        "ssh_host_ecdsa_key",
-        ]
+                         "ssh_host_key",
+                         "ssh_host_rsa_key",
+                         "ssh_host_ecdsa_key"]
 
     retrieved_keys = []
 
@@ -35,9 +36,7 @@ def get_fingerprints():
                 if re.match("[0-9]", found_key[0]) is not None:
                     retrieved_keys.append(found_key)
 
-
-    print "\n"
-    print "Fingerprints for " + env.host
+    print "\nFingerprints for {}".format(env.host)
     for key in retrieved_keys:
         print key
     print "\n"
