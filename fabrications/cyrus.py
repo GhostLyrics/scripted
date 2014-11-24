@@ -31,7 +31,6 @@ def login(server, username, password):
     connection.login(username, password)
     return connection
 
-
 # tasks #######################################################################
 
 @task
