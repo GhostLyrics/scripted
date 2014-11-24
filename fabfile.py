@@ -1,17 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# disabling due to recommended usage of fabric API
-# pylint: disable=wildcard-import, unused-wildcard-import
-
 """
-fabfile.py
+Collects all fabrications.
 
 :copyright: (c) 2014 by Alexander Skiba <skiba@icg.tugraz.at>
 :licence: MIT
 :bugreports: skiba@icg.tugraz.at
-
-Collects all fabrications.
 
 """
 
