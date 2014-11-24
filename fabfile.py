@@ -18,3 +18,4 @@ from fabrications.cyrus import *
 from fabrications.dhcp import *
 from fabrications.networking import *
 from fabrications.ssh import *
+from fabrications.sudo import *
