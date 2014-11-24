@@ -26,5 +26,8 @@ def get_configuration(module):
     """Read the configuration from configuration/cyrus.json"""
 
     configuration_path = os.path.join(PREFIX, "{}.json".format(module))
-    with open(configuration_path) as configuration:
-        return json.load(configuration)
+    try:
+        with open(configuration_path) as configuration:
+            return json.load(configuration)
+    except IOError:
+        print "No configuration file for module {}".format(module)
