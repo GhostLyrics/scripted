@@ -12,32 +12,17 @@ Cyrus Mailserver fabric commands
 
 """
 
-from fabric.api import task
-
-import json
-import os
 import imaplib
+import fabrications.configuration as config
+from fabric.api import task, run, hosts
+from os.path import splitext, basename
 
-# tasks
+# module configuration ########################################################
 
-@task
-def create_mailbox(mailbox_user):
-    """CYRUS: Create a new mailbox for the specified user."""
+MODULE = splitext(basename(__file__))[0]
+CONFIGURATION = config.get_configuration(MODULE)
 
-    configuration = get_config()
-    connection = login(configuration["hostname"],
-        configuration["username"],
-        configuration["password"])
-    try:
-        connection.create("user." + mailbox_user)
-        # this crazy syntax is required otherwise the module just gives errors
-        connection.setquota("user." + mailbox_user,
-            "(storage %s)" % configuration["default_quota"])
-    finally:
-        connection.logout()
-
-
-# internal functions
+# internal functions ##########################################################
 
 def login(server, username, password):
     """Authenticate to the IMAP server"""
@@ -46,12 +31,29 @@ def login(server, username, password):
     connection.login(username, password)
     return connection
 
-def get_config():
-    """Read the configuration from configuration/cyrus.json"""
 
-    fabric_path = os.path.dirname(os.path.realpath(__file__))
-    prefix = os.path.dirname(fabric_path)
-    configuration_path = os.path.join(prefix, "configuration/cyrus.json")
+# tasks #######################################################################
 
-    with open(configuration_path) as configuration:
-        return json.load(configuration)
+@task
+def create_mailbox(mailbox_user):
+    """CYRUS: Create a new mailbox for the specified user."""
+
+    connection = login(CONFIGURATION["hostname"],
+        CONFIGURATION["username"],
+        CONFIGURATION["password"])
+    try:
+        connection.create("user." + mailbox_user)
+        # this crazy syntax is required otherwise the module just gives errors
+        connection.setquota("user." + mailbox_user,
+            "(storage %s)" % CONFIGURATION["default_quota"])
+    finally:
+        connection.logout()
+
+@task
+@hosts(CONFIGURATION["hostname"])
+def connect_cyrus():
+    """CYRUS: Open the cyrus 'cyradm' shell."""
+
+    user = CONFIGURATION["username"]
+    command = "cyradm --user {} --authz {} localhost".format(user, user)
+    run(command)
