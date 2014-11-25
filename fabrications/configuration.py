@@ -31,4 +31,4 @@ def get_configuration(module):
         with open(configuration_path) as configuration:
             return json.load(configuration)
     except IOError:
-        print "No configuration file for module {}".format(module)
+        return None
