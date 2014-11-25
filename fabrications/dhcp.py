@@ -27,5 +27,5 @@ CONFIGURATION = config.get_configuration(MODULE)
 @task
 @hosts(CONFIGURATION["hostname"])
 def restart_dhcp():
-    """DHCP: Restart the DHCP service."""
+    """(DHCP) Restart the DHCP service."""
     run("service isc-dhcp-server restart")
