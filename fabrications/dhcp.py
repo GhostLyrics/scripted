@@ -10,9 +10,10 @@ DHCP Server fabric commands.
 
 """
 
+import configuration as config
 from fabric.api import task, run, hosts
 from os.path import splitext, basename
-import fabrications.configuration as config
+
 
 # module configuration ########################################################
 

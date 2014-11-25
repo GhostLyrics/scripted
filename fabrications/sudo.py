@@ -10,7 +10,7 @@ Sudo fabric commands.
 
 """
 
-import fabrications.configuration as config
+import configuration as config
 from fabric.api import task
 from fabric.contrib.files import append
 from os.path import splitext, basename
