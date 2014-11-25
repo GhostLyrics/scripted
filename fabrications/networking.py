@@ -18,7 +18,7 @@ import re
 
 @task
 def get_IPs():  # pylint: disable=C0103
-    """NETWORK: Retrieve IP, network interface and MAC address of a machine."""
+    """(NETWORK) Retrieve IP, network interface & MAC address of a machine."""
 
     information = None
     with hide("stdout"):

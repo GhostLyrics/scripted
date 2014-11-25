@@ -37,7 +37,7 @@ def login(server, username, password):
 
 @task
 def create_mailbox(mailbox_user):
-    """CYRUS: Create a new mailbox for the specified user."""
+    """(CYRUS) Create a new mailbox for the specified user."""
     connection = login(CONFIGURATION["hostname"],
                        CONFIGURATION["username"],
                        CONFIGURATION["password"])
@@ -56,7 +56,7 @@ def create_mailbox(mailbox_user):
 @task
 @hosts(CONFIGURATION["hostname"])
 def connect_cyrus():
-    """CYRUS: Open the cyrus 'cyradm' shell."""
+    """(CYRUS) Open the cyrus 'cyradm' shell."""
 
     user = CONFIGURATION["username"]
     command = "cyradm --user {} --authz {} localhost".format(user, user)

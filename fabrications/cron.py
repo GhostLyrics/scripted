@@ -18,7 +18,7 @@ from fabric.api import run, settings, hide, env, task
 
 @task
 def get_cronjobs():
-    """CRON: Retrieve lists of custom and scheduled cronjobs."""
+    """(CRON) Retrieve lists of custom and scheduled cronjobs."""
     with settings(warn_only=True), hide("stdout", "warnings"):
         crontab = run("crontab -l")
         etc_cronjobs = run("ls /etc/cron.*")

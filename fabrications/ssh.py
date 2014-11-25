@@ -19,7 +19,7 @@ import re
 
 @task
 def get_fingerprints():
-    """SSH: Retrieve a machine's fingerprints."""
+    """(SSH) Retrieve a machine's fingerprints."""
 
     ssh_key_locations = ["ssh_host_dsa_key",
                          "ssh_host_key",
@@ -44,7 +44,7 @@ def get_fingerprints():
 
 @task
 def set_password_login(value):
-    """SSH: Enable/Disable password login."""
+    """(SSH) Enable/Disable password login. | Arguments: (bool) value."""
 
     if value == "True":
         sed("/etc/ssh/sshd_config", "PasswordAuthentication no",

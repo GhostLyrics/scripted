@@ -27,6 +27,6 @@ CONFIGURATION = config.get_configuration(MODULE)
 
 @task
 def allow_passwordless_sudo(username):
-    """SUDO: enable a user to use sudo without password."""
+    """(SUDO) Enable a user to use sudo without password."""
     sudo_string = "{} ALL=(ALL) NOPASSWD: ALL\n".format(username)
     append("/etc/sudoers", sudo_string, use_sudo=True)
