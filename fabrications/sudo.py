@@ -22,11 +22,12 @@ MODULE = splitext(basename(__file__))[0]
 CONFIGURATION = config.get_configuration(MODULE)
 
 
-# tasks #######################################################################
+# tasks: need configuration ###################################################
 
+if CONFIGURATION is not None:
+    @task
+    def allow_passwordless_sudo(username):
+        """(SUDO) Enable a user to use sudo without password."""
 
-@task
-def allow_passwordless_sudo(username):
-    """(SUDO) Enable a user to use sudo without password."""
-    sudo_string = "{} ALL=(ALL) NOPASSWD: ALL\n".format(username)
-    append("/etc/sudoers", sudo_string, use_sudo=True)
+        sudo_string = "{} ALL=(ALL) NOPASSWD: ALL\n".format(username)
+        append("/etc/sudoers", sudo_string, use_sudo=True)
