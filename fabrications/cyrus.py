@@ -47,8 +47,7 @@ def create_mailbox(mailbox_user):
         # this crazy syntax is required otherwise the module just gives errors
         connection.setquota(
             "user.{}".format(mailbox_user),
-            "(storage {})".format(CONFIGURATION["default_quota"])
-
+            "(storage {})".format(CONFIGURATION["default_quota"]))
     finally:
         connection.logout()
 
