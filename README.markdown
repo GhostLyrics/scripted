@@ -24,14 +24,14 @@ Keep in mind that some modules require configuration. You can find the correspon
 ```none
 allow_passwordless_sudo  (SUDO) Enable a user to use sudo without password.
 brew_upgrade             (HOMEBREW) Update formulas and upgrade installed formulas.
-change_password          (PASSWORD) Change password. | (string) password_type.
+change_password          (PASSWORD) Change password. | (string) password_type, (string) user.
 connect_cyrus            (CYRUS) Open the cyrus 'cyradm' shell.
 create_mailbox           (CYRUS) Create a new mailbox for the specified user.
 get_IPs                  (NETWORK) Retrieve IP, network interface & MAC address of a machine.
 get_cronjobs             (CRON) Retrieve lists of custom and scheduled cronjobs.
 get_fingerprints         (SSH) Retrieve a machine's fingerprints.
 restart_dhcp             (DHCP) Restart the DHCP service.
-set_password_login       (SSH) Enable/Disable password login. | (bool) value.
+set_password_login       (SSH) Enable/Disable password login. | (bool) boolean.
 ```
 
 ### Available options:
