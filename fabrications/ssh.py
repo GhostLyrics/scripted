@@ -43,13 +43,13 @@ def get_fingerprints():
 
 
 @task
-def set_password_login(value):
-    """(SSH) Enable/Disable password login. | Arguments: (bool) value."""
+def set_password_login(boolean):
+    """(SSH) Enable/Disable password login. | (bool) boolean."""
 
-    if value == "True":
+    if boolean == "True":
         sed("/etc/ssh/sshd_config", "PasswordAuthentication no",
             "#PasswordAuthentication yes", use_sudo=True)
 
-    elif value == "False":
+    elif boolean == "False":
         sed("/etc/ssh/sshd_config", "#PasswordAuthentication yes",
             "PasswordAuthentication no", use_sudo=True)

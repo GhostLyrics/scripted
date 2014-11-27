@@ -17,7 +17,7 @@ from fabric.api import run, task
 
 @task
 def change_password(password_type):
-    """(PASSWORD) Change password. | Arguments: (string) password_type."""
+    """(PASSWORD) Change password. | (string) password_type."""
 
     if password_type == "local":
         run("passwd")
