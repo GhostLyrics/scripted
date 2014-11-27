@@ -25,8 +25,21 @@ CONFIGURATION = config.get_configuration(MODULE)
 
 
 @task
-def change_password(password_type):
-    """(PASSWORD) Change password. | (string) password_type."""
+def change_password(password_type, username="self"):
+    """(PASSWORD) Change password. | (string) password_type, (string) user.
+
+    Arguments:
+        password_type can be either 'local' or 'samba'
+        user will default to the user you log in with if unspecified
+
+    """
 
     if password_type == "local":
-        run("passwd")
+        command = "passwd"
+    elif password_type == "samba":
+        command = "smbpasswd"
+
+    if username != "self":
+        command = "{} {}".format(command, username)
+
+    run(command)
