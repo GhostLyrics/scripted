@@ -34,6 +34,10 @@ restart_dhcp             (DHCP) Restart the DHCP service.
 set_password_login       (SSH) Enable/Disable password login. | (bool) value.
 ```
 
+### Available options:
+
+* `change_password`: options for `password_type` are: `local`, `samba`.
+
 ## Notes
 
 * **cyrus**: `default_quota` is measured in megabytes.
