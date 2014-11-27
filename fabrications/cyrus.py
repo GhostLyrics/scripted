@@ -32,31 +32,31 @@ def login(server, username, password):
     return connection
 
 
-# tasks #######################################################################
+# tasks : require configuration ###############################################
 
 
-@task
-def create_mailbox(mailbox_user):
-    """(CYRUS) Create a new mailbox for the specified user."""
-    connection = login(CONFIGURATION["hostname"],
-                       CONFIGURATION["username"],
-                       CONFIGURATION["password"])
-    try:
-        connection.create("user." + mailbox_user)
+if CONFIGURATION is not None:
+    @task
+    def create_mailbox(mailbox_user):
+        """(CYRUS) Create a new mailbox for the specified user."""
+        connection = login(CONFIGURATION["hostname"],
+                           CONFIGURATION["username"],
+                           CONFIGURATION["password"])
+        try:
+            connection.create("user." + mailbox_user)
 
-        # this crazy syntax is required otherwise the module just gives errors
-        connection.setquota(
-            "user.{}".format(mailbox_user),
-            "(storage {})".format(CONFIGURATION["default_quota"]))
-    finally:
-        connection.logout()
+            # this crazy syntax is required otherwise the module gives errors
+            connection.setquota(
+                "user.{}".format(mailbox_user),
+                "(storage {})".format(CONFIGURATION["default_quota"]))
+        finally:
+            connection.logout()
 
+    @task
+    @hosts(CONFIGURATION["hostname"])
+    def connect_cyrus():
+        """(CYRUS) Open the cyrus 'cyradm' shell."""
 
-@task
-@hosts(CONFIGURATION["hostname"])
-def connect_cyrus():
-    """(CYRUS) Open the cyrus 'cyradm' shell."""
-
-    user = CONFIGURATION["username"]
-    command = "cyradm --user {} --authz {} localhost".format(user, user)
-    run(command)
+        user = CONFIGURATION["username"]
+        command = "cyradm --user {} --authz {} localhost".format(user, user)
+        run(command)

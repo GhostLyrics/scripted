@@ -11,6 +11,15 @@ Password related fabric commands.
 """
 
 from fabric.api import run, task
+from os.path import basename, splitext
+import configuration as config
+
+# module configuration ########################################################
+
+
+MODULE = splitext(basename(__file__))[0]
+CONFIGURATION = config.get_configuration(MODULE)
+
 
 # tasks #######################################################################
 

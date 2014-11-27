@@ -22,11 +22,12 @@ MODULE = splitext(basename(__file__))[0]
 CONFIGURATION = config.get_configuration(MODULE)
 
 
-# tasks #######################################################################
+# tasks: require configuration ################################################
 
 
-@task
-@hosts(CONFIGURATION["hostname"])
-def restart_dhcp():
-    """(DHCP) Restart the DHCP service."""
-    run("service isc-dhcp-server restart")
+if CONFIGURATION is not None:
+    @task
+    @hosts(CONFIGURATION["hostname"])
+    def restart_dhcp():
+        """(DHCP) Restart the DHCP service."""
+        run("service isc-dhcp-server restart")

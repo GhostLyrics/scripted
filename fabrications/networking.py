@@ -11,7 +11,17 @@ Network fabric commands.
 """
 
 from fabric.api import run, hide, env, task
+from os.path import splitext, basename
+import configuration as config
 import re
+
+
+# module configuration ########################################################
+
+
+MODULE = splitext(basename(__file__))[0]
+CONFIGURATION = config.get_configuration(MODULE)
+
 
 # tasks #######################################################################
 

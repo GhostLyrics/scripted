@@ -12,7 +12,16 @@ SSH fabric commands.
 
 from fabric.api import run, settings, hide, env, task
 from fabric.contrib.files import sed
+from os.path import basename, splitext
 import re
+import configuration as config
+
+# module configuration ########################################################
+
+
+MODULE = splitext(basename(__file__))[0]
+CONFIGURATION = config.get_configuration(MODULE)
+
 
 # tasks #######################################################################
 
