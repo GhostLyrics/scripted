@@ -38,7 +38,7 @@ def login(server, username, password):
 if CONFIGURATION is not None:
     @task
     def create_mailbox(mailbox_user):
-        """(CYRUS) Create a new mailbox for the specified user."""
+        """(CYRUS) Create a new mailbox. | (string) username."""
         connection = login(CONFIGURATION["hostname"],
                            CONFIGURATION["username"],
                            CONFIGURATION["password"])
