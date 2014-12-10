@@ -32,6 +32,17 @@ def login(server, username, password):
     return connection
 
 
+# tasks #######################################################################
+
+
+@task
+def renew_aliases():
+    """(CYRUS): Read in the aliases file."""
+
+    command = "newaliases"
+    run(command)
+
+
 # tasks : require configuration ###############################################
 
 
@@ -59,11 +70,4 @@ if CONFIGURATION is not None:
 
         user = CONFIGURATION["username"]
         command = "cyradm --user {} --authz {} localhost".format(user, user)
-        run(command)
-
-    @task
-    def renew_aliases():
-        """(CYRUS): Read in the aliases file."""
-
-        command = "newaliases"
         run(command)
