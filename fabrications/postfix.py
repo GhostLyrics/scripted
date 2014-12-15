@@ -26,7 +26,7 @@ CONFIGURATION = config.get_configuration(MODULE)
 
 @task
 def renew_aliases():
-    """(CYRUS): Read in the aliases file."""
+    """(POSTFIX): Read in the aliases file."""
 
     command = "newaliases"
     run(command)
