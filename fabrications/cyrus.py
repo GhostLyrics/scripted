@@ -32,17 +32,6 @@ def login(server, username, password):
     return connection
 
 
-# tasks #######################################################################
-
-
-@task
-def renew_aliases():
-    """(CYRUS): Read in the aliases file."""
-
-    command = "newaliases"
-    run(command)
-
-
 # tasks : require configuration ###############################################
 
 

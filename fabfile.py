@@ -19,5 +19,6 @@ from fabrications.dhcp import *
 from fabrications.homebrew import *
 from fabrications.networking import *
 from fabrications.password import *
+from fabrications.postfix import *
 from fabrications.ssh import *
 from fabrications.sudo import *
