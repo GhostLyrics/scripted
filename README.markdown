@@ -22,7 +22,7 @@ Keep in mind that some modules require configuration. You can find the correspon
 ## Available commands:
 
 ```none
-allow_passwordless_sudo  (SUDO) Enable a user to use sudo without password.
+allow_passwordless_sudo  (SUDO) Enable use of sudo without password. | (string) username.
 brew_upgrade             (HOMEBREW) Update formulas and upgrade installed formulas.
 change_password          (PASSWORD) Change password. | (string) password_type, (string) user.
 connect_cyrus            (CYRUS) Open the cyrus 'cyradm' shell.
