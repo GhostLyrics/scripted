@@ -30,6 +30,7 @@ create_mailbox           (CYRUS) Create a new mailbox for the specified user.
 get_IPs                  (NETWORK) Retrieve IP, network interface & MAC address of a machine.
 get_cronjobs             (CRON) Retrieve lists of custom and scheduled cronjobs.
 get_fingerprints         (SSH) Retrieve a machine's fingerprints.
+renew_aliases            (POSTFIX): Read in the aliases file.
 restart_dhcp             (DHCP) Restart the DHCP service.
 set_password_login       (SSH) Enable/Disable password login. | (bool) boolean.
 ```
