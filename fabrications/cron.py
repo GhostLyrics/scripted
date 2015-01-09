@@ -27,6 +27,7 @@ CONFIGURATION = config.get_configuration(MODULE)
 @task
 def get_cronjobs():
     """(CRON) Retrieve lists of custom and scheduled cronjobs."""
+
     with settings(warn_only=True), hide("stdout", "warnings"):
         crontab = run("crontab -l")
         etc_cronjobs = run("ls /etc/cron.*")
