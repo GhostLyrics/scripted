@@ -14,7 +14,7 @@ from fabric.api import run, settings, hide, env, task
 from fabric.contrib.files import sed
 from os.path import basename, splitext
 import re
-import configuration as config
+import fabrications.configuration as config
 
 # module configuration ########################################################
 

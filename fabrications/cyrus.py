@@ -11,7 +11,7 @@ Cyrus Mailserver fabric commands.
 """
 
 import imaplib
-import configuration as config
+import fabrications.configuration as config
 from fabric.api import task, run, hosts
 from os.path import splitext, basename
 

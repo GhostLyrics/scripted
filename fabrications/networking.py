@@ -12,7 +12,7 @@ Network fabric commands.
 
 from fabric.api import run, hide, env, task
 from os.path import splitext, basename
-import configuration as config
+import fabrications.configuration as config
 import re
 
 

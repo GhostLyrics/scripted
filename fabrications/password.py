@@ -12,7 +12,7 @@ Password related fabric commands.
 
 from fabric.api import run, task
 from os.path import basename, splitext
-import configuration as config
+import fabrications.configuration as config
 
 # module configuration ########################################################
 

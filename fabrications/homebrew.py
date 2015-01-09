@@ -10,7 +10,7 @@ Homebrew package manager for OS X fabric commands.
 
 """
 
-import configuration as config
+import fabrications.configuration as config
 from os.path import splitext, basename
 from fabric.api import run, task
 
