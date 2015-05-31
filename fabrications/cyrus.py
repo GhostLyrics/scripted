@@ -42,8 +42,15 @@ if CONFIGURATION is not None:
         connection = login(CONFIGURATION["hostname"],
                            CONFIGURATION["username"],
                            CONFIGURATION["password"])
+
+        print "Logged in to {}.".format(CONFIGURATION["hostname"])
+        print "Will create user {}.".format(mailbox_user)
+
         try:
             connection.create("user." + mailbox_user)
+
+            print "Setting maximum mailbox size to {}".format(
+                CONFIGURATION["default_quota"])
 
             # this crazy syntax is required otherwise the module gives errors
             connection.setquota(
