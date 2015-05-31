@@ -4,7 +4,7 @@
 """
 Collects all fabrications.
 
-:copyright: (c) 2014 by Alexander Skiba <skiba@icg.tugraz.at>
+:copyright: (c) 2014-2015 by Alexander Skiba <skiba@icg.tugraz.at>
 :licence: MIT
 :bugreports: skiba@icg.tugraz.at
 
