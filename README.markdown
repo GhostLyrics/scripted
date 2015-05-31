@@ -27,6 +27,7 @@ brew_upgrade             (HOMEBREW) Update formulas and upgrade installed formul
 change_password          (PASSWORD) Change password. | (string) password_type, (string) user.
 connect_cyrus            (CYRUS) Open the cyrus 'cyradm' shell.
 create_mailbox           (CYRUS) Create a new mailbox for the specified user.
+delete_mailbox           (CYRUS) Delete a given mailbox. | (string) username.
 get_IPs                  (NETWORK) Retrieve IP, network interface & MAC address of a machine.
 get_cronjobs             (CRON) Retrieve lists of custom and scheduled cronjobs.
 get_fingerprints         (SSH) Retrieve a machine's fingerprints.
