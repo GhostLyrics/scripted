@@ -60,6 +60,29 @@ if CONFIGURATION is not None:
             connection.logout()
 
     @task
+    def delete_mailbox(mailbox_user):
+        """(CYRUS) Delete a given mailbox. | (string) username."""
+        connection = login(CONFIGURATION["hostname"],
+                           CONFIGURATION["username"],
+                           CONFIGURATION["password"])
+
+        print "Logged in to {}.".format(CONFIGURATION["hostname"])
+        print "Will delete user {}.".format(mailbox_user)
+
+        try:
+            mailbox = "user.{}".format(mailbox_user)
+
+            print "Adding permissions to delete mailbox to current user."
+            connection.setacl(mailbox, CONFIGURATION["username"],
+                              "lrswipkxtecda")
+
+            print "Deleting mailbox..."
+            connection.delete(mailbox)
+
+        finally:
+            connection.logout()
+
+    @task
     @hosts(CONFIGURATION["hostname"])
     def connect_cyrus():
         """(CYRUS) Open the cyrus 'cyradm' shell."""
